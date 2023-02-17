@@ -37,7 +37,7 @@
 <?php
         $list=['ali',24,'student','onlychild',4];
         
-        foreach($list as $key=>$item-1){
+        foreach($list as $key=>$item){
 
             echo $key.' :::> '.$item ."<br>";
         }
