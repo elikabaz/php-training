@@ -8,7 +8,7 @@
 </head>
 <body>
     <?php 
-    # I want 
+    # I want get ave
     $one=25;
     $two=30.5;
     $plus=$one+$two;
