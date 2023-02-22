@@ -8,7 +8,11 @@
 </head>
 <body>
 <?php
+<<<<<<< HEAD
 // ==
+=======
+// dd
+>>>>>>> 0b4080685494257159aba76299100a8dc8a2699a
 $list=[1,2,3,4];
 
 $sum= function() use($list){
