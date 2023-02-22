@@ -8,7 +8,7 @@
 </head>
 <body>
 <?php
-
+// ==
 $list=[1,2,3,4];
 
 $sum= function() use($list){
