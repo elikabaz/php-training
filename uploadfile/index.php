@@ -1,5 +1,5 @@
 <?php
-require_once('../../helpers/db.php');////import db
+require_once('../helpers/db.php');////import db
 
 if(isset($_FILES["image"])){
     // die(json_encode($_FILES['image'] ,JSON_PRETTY_PRINT));
