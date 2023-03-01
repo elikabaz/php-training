@@ -7,17 +7,21 @@ if(!$link){
 }
 echo 'connected';
 
-// $SQL= 'CREATE DATABASE test23';
 
-$SQL = 'CREATE TABLE users (id INT AUTO_INCREMENT ,email VARCHAR PRIMARY KEY
+mysqli_select_db($link , 'zaribdb');
 
-$result=mysqli_query($link,$SQL);
-if($result){
-    echo 'successfulll';
+$SQL = "create table users (id INT AUTO_INCREMENT ,
+                            email VARCHAR(100) NOT NULL ,
+                            password VARCHAR(100) NOT NULL, 
+                            Primery key)";
+
+if($result=mysqli_query($link,$SQL)){
+
+    echo 'success';
+
 }else{
+
     echo 'connecion is:'. mysqli_error($link);
 }
-
-
 mysqli_close($link);
 ?>
