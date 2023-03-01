@@ -7,13 +7,12 @@ if(!$link){
 }
 echo 'connected';
 
+mysqli_select_db($link , 'zarindb');
 
-mysqli_select_db($link , 'zaribdb');
-
-$SQL = "create table users (id INT AUTO_INCREMENT ,
-                            email VARCHAR(100) NOT NULL ,
-                            password VARCHAR(100) NOT NULL, 
-                            Primery key)";
+$SQL = "CREATE TABLE users (id INT AUTO_INCREMENT ,
+                            email VARCHAR(30) NOT NULL ,
+                            password VARCHAR(30) NOT NULL, 
+                            PRIMARY KEY(id))";
 
 if($result=mysqli_query($link,$SQL)){
 
