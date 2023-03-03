@@ -1,41 +1,59 @@
 <?php
-$errors=[];
-//////in this function we want check all the data is set or no (not important post/get)
-function request($data){
-    return isset($_REQUEST[$data]) && $_REQUEST[$data] ==""  ?  trim($_REQUEST[$data]):null ;
+function request($field) {
+    return isset($_REQUEST[$field]) && $_REQUEST[$field] != "" ? trim($_REQUEST[$field]) : null;
 }
 
-function has_error($data){
-    global $errors;///we cant use arrow function cuse all the time this val is empty
-    return isset($errors[$data]);
-}
-
-function get_error($data){
+function has_error($field) {
     global $errors;
-    return has_error($data) ? $errors[$data]:null;
+
+    return isset($errors[$field]);
 }
+
+function get_error($field) {
+    global $errors;
+
+    return has_error($field) ? $errors[$field] : null;
+}
+
+$errors = [];
+$succses=false;
 
 
 if($_SERVER['REQUEST_METHOD']=='post'){
     $email=request('email');
     $password= $email=request('password');
-    var_dump($email);
 
     if(is_null($email)){
-        $errors['email']='Dose not empty';
+        $errors['email']='can not empty';
     }
 
     if(is_null($password)){
-     $errors['password']='Dose not empty';
+     $errors['password']='can not empty';
 
-    }elseif(strlen($password) > 6){/////this is rull about characters
+    }elseif(strlen($password) < 6){/////this is rull about characters
+    $errors['password']='can not lower than six character';
 
-    $errors['password']='Dose not lower than six character';
     }
 
-    if(! is_null($email) && ! is_null($password)&& strlen($password)>=6){
-        echo'save user into database';
-    }
+    if(! is_null($email) && ! is_null($password) && strlen($password)>=6){
+        $link=mysqli_connect('localhost:3306','root','');
+
+            if(! $link){
+                echo 'could not connect: ' . mysqli_connect_error();
+                exit;
+            }
+
+            mysqli_select_db($link ,'test23');
+
+            $SQL = "INSERT INTO users ('{email}' , '{password}') values ('email@gmail.com' , '1234568')";
+           
+            if($result= mysqli_query($link,$SQL) ){
+                $succses=true;
+            }else{
+                echo 'error:' . mysqli_error($link);
+                exit;
+            }
+        }
 }
 ?>
 
@@ -54,7 +72,7 @@ if($_SERVER['REQUEST_METHOD']=='post'){
         <label for="email">email:</label>
         <input type="email" name="email"> <br>
         <?php if(has_error('email')) { ?>
-            <span><?php echo 'get_error(email)'; ?></span><br>
+            <span><?php echo get_error('email'); ?></span><br>
         <?php } ?>
        
         <label for="password">pasword:</label>

@@ -8,6 +8,7 @@ if(!$link){
 echo 'connected';
 
 mysqli_select_db($link , 'zarindb');
+mysqli_select_db($link , 'test23');
 
 $SQL = "CREATE TABLE users (id INT AUTO_INCREMENT ,
                             email VARCHAR(30) NOT NULL ,
