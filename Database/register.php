@@ -19,15 +19,17 @@ $errors = [];
 $succses=false;
 
 
-if($_SERVER['REQUEST_METHOD']=='post'){
+if(isset($_REQUEST['submit'])){
     $email=request('email');
-    $password= $email=request('password');
+    $password=request('password');
+    // die($email . $password);
 
-    if(is_null($email)){
+
+    if(empty($email)){
         $errors['email']='can not empty';
     }
 
-    if(is_null($password)){
+    if(empty($password)){
      $errors['password']='can not empty';
 
     }elseif(strlen($password) < 6){/////this is rull about characters
@@ -35,7 +37,7 @@ if($_SERVER['REQUEST_METHOD']=='post'){
 
     }
 
-    if(! is_null($email) && ! is_null($password) && strlen($password)>=6){
+    if(!empty($email) && ! empty($password) && strlen($password)>=6){
         $link=mysqli_connect('localhost:3306','root','');
 
             if(! $link){
@@ -43,16 +45,18 @@ if($_SERVER['REQUEST_METHOD']=='post'){
                 exit;
             }
 
-            mysqli_select_db($link ,'test23');
+            mysqli_select_db($link ,'zarindb');
 
-            $SQL = "INSERT INTO users ('{email}' , '{password}') values ('email@gmail.com' , '1234568')";
+            $SQL = $link->prepare("INSERT INTO users (email , password) values (? , ?)");
+            $SQL ->bind_param("ss", $email,$password);////bind sql query
+
+            $result=$SQL->execute();
            
-            if($result= mysqli_query($link,$SQL) ){
-                $succses=true;
-            }else{
+            if(!$result){
                 echo 'error:' . mysqli_error($link);
                 exit;
             }
+            echo 'success';
         }
 }
 ?>
@@ -82,7 +86,7 @@ if($_SERVER['REQUEST_METHOD']=='post'){
         <?php } ?>
         <br>
         <br>
-        <button type="submit">register</button>
+        <button name="submit" type="submit">register</button>
     </form>
 </body>
 </html>
